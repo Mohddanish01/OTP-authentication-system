@@ -1,0 +1,20 @@
+import dotenv from "dotenv";
+dotenv.config({ quiet: true });
+
+import express from "express";
+import { connectDB } from "./src/config/database.js";
+import  userRoutes  from "./src/routes/user-routes.js";
+
+const app = express();
+const PORT = 9000 || process.env.PORT;
+
+connectDB();
+
+app.use(express.json());
+
+app.use("/v1/api", userRoutes);
+
+app.listen(PORT, (err) => {
+  if (err) console.log(err);
+  console.log(`Server started at ${PORT}`);
+});
